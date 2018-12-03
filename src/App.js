@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 import robots from './robots';
 import SearchBox from './searchbox'
 import Cardlist from './cardlist';
@@ -12,10 +14,24 @@ class App extends Component {
     }
 
     onSearchChange = (event) => {
-        this.setState({ searchfield: event.target.value });
+        this.setState({
+            searchfield: event.target.value
+        });
         console.log("SearchField is :" + this.state.searchfield)
 
     }
+
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/users').then((response) => {
+            return response.json();
+        }).then((users) => {
+            this.setState({
+                robots: users
+            });
+        });
+    }
+
+
     render() {
         const filterRobots = this.state.robots.filter(
             (robots) => {
@@ -24,15 +40,19 @@ class App extends Component {
 
         console.log("Filtered robots is:", filterRobots);
 
-        return (
-            <div className="tc" >
-                <h1 >RoboFriends</h1>
-                <SearchBox searchChange={this.onSearchChange} />
-                < Cardlist robots={
-                    filterRobots
-                }
-                />
-            </div>
+        return ( <
+            div className = "tc" >
+            <
+            h1 > RoboFriends < /h1> <
+            SearchBox searchChange = {
+                this.onSearchChange
+            }
+            /> <
+            Cardlist robots = {
+                filterRobots
+            }
+            /> < /
+            div >
         );
     };
 }
