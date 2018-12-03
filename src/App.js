@@ -1,14 +1,15 @@
 import React, {
     Component
 } from 'react';
-import robots from './robots';
+//import robots from './robots';
 import SearchBox from './searchbox'
 import Cardlist from './cardlist';
+import Scroll from './scroll';
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            robots: robots,
+            robots: [],
             searchfield: ''
         }
     }
@@ -22,6 +23,8 @@ class App extends Component {
     }
 
     componentDidMount() {
+
+        //window.fetch()
         fetch('https://jsonplaceholder.typicode.com/users').then((response) => {
             return response.json();
         }).then((users) => {
@@ -39,21 +42,25 @@ class App extends Component {
             });
 
         console.log("Filtered robots is:", filterRobots);
+        if (this.state.robots.length === 0) {
+            return (<h1 className="tc f1">Loading...</h1>)
+        }
+        else {
+            return (<div className="tc" >
+                <h1> RoboFriends </h1>
 
-        return ( <
-            div className = "tc" >
-            <
-            h1 > RoboFriends < /h1> <
-            SearchBox searchChange = {
-                this.onSearchChange
-            }
-            /> <
-            Cardlist robots = {
-                filterRobots
-            }
-            /> < /
-            div >
-        );
+                <SearchBox searchChange={
+                    this.onSearchChange
+                }
+                />
+                <Scroll>
+                    < Cardlist robots={
+                        filterRobots} />
+
+                </Scroll>
+            </div>
+            );
+        }
     };
 }
 
