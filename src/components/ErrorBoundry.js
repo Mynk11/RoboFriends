@@ -1,6 +1,6 @@
 import React, {
     Component
-} from './react';
+} from 'react';
 
 class ErrorBoundry extends Component {
 
@@ -9,7 +9,21 @@ class ErrorBoundry extends Component {
         this.state = {
             hasError: false
         }
+
     }
+    componentDidCatch(error, info) {
+        this.setState({ hasError: true });
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return (<h1>Error while loading : 404</h1>)
+        }
+        else {
+            return this.props.children;
+        }
+    }
+
 }
 
 export default ErrorBoundry;
