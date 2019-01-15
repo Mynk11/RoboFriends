@@ -13,6 +13,7 @@ const cards = ({ id, name, email }) => {
         </div>
 
     );
+
 }
 
 export default cards;
